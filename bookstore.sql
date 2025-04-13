@@ -49,3 +49,41 @@ CREATE TABLE book_author (
     FOREIGN KEY (author_id) REFERENCES author(author_id) ON DELETE CASCADE
 );
 
+-- query 6 - 10
+--customer: a list of the bookstore customers
+CREATE TABLE customer (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone_number VARCHAR(20),
+    address TEXT
+);
+
+--customer_address: a list of address for customers. each customer can have multiple addresses
+CREATE TABLE customer_address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    address TEXT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
+);
+
+--address_status: a list of statuses for an address(e.g. current, previous, etc.)
+CREATE TABLE address_status (
+    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+--address: a list of all addresses in the system.
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    address TEXT NOT NULL,
+    status_id INT,
+    FOREIGN KEY (status_id) REFERENCES address_status(status_id) ON DELETE SET NULL
+);
+
+--country:a list of countries where addresses are located
+CREATE TABLE country (
+    country_id INT AUTO_INCREMENT PRIMARY KEY,
+    country_name VARCHAR(100) NOT NULL UNIQUE
+);
