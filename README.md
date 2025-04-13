@@ -21,6 +21,8 @@ An **Entity-Relationship Diagram (ERD)** is included to visually represent the r
 
 📎 *Bookstore ERD:* `book_store.drawio`
 
+![bookstore](https://github.com/user-attachments/assets/29774967-4744-436e-bb7e-3c0ec15676b5)
+
 ---
 
 ## 🛠️ Tools and Technologies
