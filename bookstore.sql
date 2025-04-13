@@ -3,6 +3,17 @@ CREATE DATABASE IF NOT EXISTS bookstoredb;
 
 USE bookstoredb;
 
+-- creating new users 
+CREATE USER 'senuadev'@'localhost' IDENTIFIED BY '1234';
+CREATE USER 'ouinordine'@'localhost' IDENTIFIED BY '1234';
+CREATE USER 'Aresthegod02'@'localhost' IDENTIFIED BY '1234';
+
+--  grant access to bookstoredb
+GRANT ALL PRIVILEGES ON bookstore.* TO 'senuadev'@'localhost';
+GRANT ALL PRIVILEGES ON bookstore.* TO 'ouinordine'@'localhost';
+GRANT ALL PRIVILEGES ON bookstore.* TO 'Aresthegod02'@'localhost';
+
+
 -- create the table for book_language
 CREATE TABLE book_language (
     language_id INT PRIMARY KEY,
