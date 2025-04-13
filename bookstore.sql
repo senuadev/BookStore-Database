@@ -50,7 +50,7 @@ CREATE TABLE book_author (
 );
 
 -- query 6 - 10
---customer: a list of the bookstore customers
+-- customer: a list of the bookstore customers
 CREATE TABLE customer (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
@@ -60,32 +60,43 @@ CREATE TABLE customer (
     address TEXT
 );
 
---customer_address: a list of address for customers. each customer can have multiple addresses
-CREATE TABLE customer_address (
-    address_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
-    address TEXT NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
-);
-
---address_status: a list of statuses for an address(e.g. current, previous, etc.)
+-- address_status: a list of statuses for an address(e.g. current, previous, etc.)
 CREATE TABLE address_status (
     status_id INT AUTO_INCREMENT PRIMARY KEY,
     status_name VARCHAR(100) NOT NULL UNIQUE
 );
 
---address: a list of all addresses in the system.
+-- country:a list of countries where addresses are located
+CREATE TABLE country (
+    country_id INT AUTO_INCREMENT PRIMARY KEY,
+    country_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- address: a list of all addresses in the system.
 CREATE TABLE address (
     address_id INT AUTO_INCREMENT PRIMARY KEY,
     address TEXT NOT NULL,
     status_id INT,
-    FOREIGN KEY (status_id) REFERENCES address_status(status_id) ON DELETE SET NULL
+    country_id INT,
+    FOREIGN KEY (status_id) REFERENCES address_status(status_id) ON DELETE SET NULL,
+    FOREIGN KEY (country_id) REFERENCES country(country_id) ON DELETE CASCADE
 );
 
---country:a list of countries where addresses are located
-CREATE TABLE country (
-    country_id INT AUTO_INCREMENT PRIMARY KEY,
-    country_name VARCHAR(100) NOT NULL UNIQUE
+-- customer_address: a list of address for customers. each customer can have multiple addresses
+CREATE TABLE customer_address (
+    customer_address_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    address_id INT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE,
+    FOREIGN KEY (address_id) REFERENCES address(address_id) ON DELETE CASCADE
+);
+
+-- Create table shipping_method
+CREATE TABLE shipping_method (
+    shipping_method_id INT AUTO_INCREMENT PRIMARY KEY,
+    method_name VARCHAR(50) NOT NULL,
+    cost DECIMAL(6, 2) NOT NULL,
+    estimated_delivery_time VARCHAR(50) NOT NULL
 );
 
 -- Create table cust_order
@@ -110,12 +121,11 @@ CREATE TABLE order_line (
     FOREIGN KEY (order_id) REFERENCES cust_order(order_id)
 );
 
--- Create table shipping_method
-CREATE TABLE shipping_method (
-    shipping_method_id INT AUTO_INCREMENT PRIMARY KEY,
-    method_name VARCHAR(50) NOT NULL,
-    cost DECIMAL(6, 2) NOT NULL,
-    estimated_delivery_time VARCHAR(50) NOT NULL
+-- Create table order_status
+CREATE TABLE order_status (
+    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_name VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
 );
 
 -- Create table order_history
@@ -128,11 +138,4 @@ CREATE TABLE order_history (
     note TEXT,
     FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
     FOREIGN KEY (status_id) REFERENCES order_status(status_id)
-);
-
--- Create table order_status
-CREATE TABLE order_status (
-    status_id INT AUTO_INCREMENT PRIMARY KEY,
-    status_name VARCHAR(50) NOT NULL UNIQUE,
-    description TEXT
 );
