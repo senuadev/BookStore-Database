@@ -87,3 +87,52 @@ CREATE TABLE country (
     country_id INT AUTO_INCREMENT PRIMARY KEY,
     country_name VARCHAR(100) NOT NULL UNIQUE
 );
+
+-- Create table cust_order
+CREATE TABLE cust_order (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    shipping_method_id INT,
+    total_amount DECIMAL(10, 2),
+    status ENUM('Pending', 'Shipped', 'Delivered', 'Cancelled') DEFAULT 'Pending',
+    FOREIGN KEY (shipping_method_id) REFERENCES shipping_method(shipping_method_id)
+);
+
+-- Create table order_line
+CREATE TABLE order_line (
+    order_line_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    book_id INT NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    price DECIMAL(8, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (quantity * price) STORED,
+    FOREIGN KEY (order_id) REFERENCES cust_order(order_id)
+);
+
+-- Create table shipping_method
+CREATE TABLE shipping_method (
+    shipping_method_id INT AUTO_INCREMENT PRIMARY KEY,
+    method_name VARCHAR(50) NOT NULL,
+    cost DECIMAL(6, 2) NOT NULL,
+    estimated_delivery_time VARCHAR(50) NOT NULL
+);
+
+-- Create table order_history
+CREATE TABLE order_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    status_id INT NOT NULL,
+    changed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    changed_by VARCHAR(100),
+    note TEXT,
+    FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
+    FOREIGN KEY (status_id) REFERENCES order_status(status_id)
+);
+
+-- Create table order_status
+CREATE TABLE order_status (
+    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_name VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
+);
