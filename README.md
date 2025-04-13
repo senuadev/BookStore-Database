@@ -65,3 +65,34 @@ cd BookStore-Database
 - `order_status`: Status categories (e.g., pending, shipped, delivered)  
 
 ---
+
+## Contributors
+
+<table>
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/senuadev">
+          <img src="https://avatars.githubusercontent.com/u/202750193?v=4" width="100;" alt="Simon"/>
+          <br />
+          <sub><b>Simon</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/ouinordine">
+          <img src="https://avatars.githubusercontent.com/u/200663794?v=4" width="100;" alt="Noraldine"/>
+          <br />
+          <sub><b>Noraldine</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/Aresthegod02">
+          <img src="https://avatars.githubusercontent.com/u/159646416?v=4" width="100;" alt="Best Femi Walsh"/>
+          <br />
+          <sub><b>Best Femi Walsh</b></sub>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
